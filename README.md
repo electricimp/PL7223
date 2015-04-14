@@ -40,4 +40,4 @@ power.sample(function(powerData) {
 ```
 ## License
 
-The LatchingRelay library is licensed under the [MIT License](./LICENSE).
+The example code in this library is licensed under the [MIT License](./LICENSE).
