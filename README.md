@@ -2,6 +2,8 @@
 
 The driver class for the PL7223 is based on a datasheet under NDA (non-disclosure agreement). As such, we cannot open source the driver class, however we can make it available through Electric Imp's library management system.
 
+**To add this library to your project, add** `#require "PL7223.class.nut:1.0.0"` **to the top of your device code**
+
 ## Class Usage
 
 ## constructor(spi, resetPin, chipSelectPin)
