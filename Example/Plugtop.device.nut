@@ -1,13 +1,13 @@
 #require "PL7223.class.nut:1.0"
 #require "LatchingRelay.class.nut:1.0"
 #require "button.class.nut:1.0"
-#require "Bullwinkle.class.nut:1.0"
+#require "messagemanager.class.nut:1.0.2"
 
 relay <- LatchingRelay(hardware.pin9, hardware.pinA, 0);
 button <- Button(hardware.pin1, DIGITAL_IN, 1, relay.toggle.bindenv(relay), null);
 
-// Create Bullwinkle object
-bull <- Bullwinkle();
+// Create MessageManager object
+mm <- MessageManager();
 
 // Configure Power Monitoring:
 spi <- hardware.spi257;
@@ -30,20 +30,20 @@ function sample() {
 } sample();
 
 // agent handlers
-bull.on("getPower", function(context) {
-  context.reply(nv.wattSeconds);
+mm.on("getPower", function(msg, reply) {
+  reply(nv.wattSeconds);
 });
 
-bull.on("resetPower", function(context) {
+mm.on("resetPower", function(msg, reply) {
   nv.wattSeconds = 0;
-  context.reply(nv.wattSeconds);
+  reply(nv.wattSeconds);
 });
 
-bull.on("getState", function(context) {
-  context.reply(relay.getState());
+mm.on("getState", function(msg, reply) {
+  reply(relay.getState());
 });
 
-bull.on("setState", function(context) {
-    relay.write(context.params);
-    context.reply(relay.getState());
+mm.on("setState", function(msg, reply) {
+    relay.write(msg.data);
+    reply(relay.getState());
 });
